@@ -45,7 +45,6 @@ public class CatRingBehavior : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         var rotation = Vector3.zero;
@@ -56,5 +55,6 @@ public class CatRingBehavior : MonoBehaviour
     public List<GameObject> Cats => _cats;
 
     private CapsuleCollider _parentCylinder;
+    
     private List<GameObject> _cats = new List<GameObject>();
 }
