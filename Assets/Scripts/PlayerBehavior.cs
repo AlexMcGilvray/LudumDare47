@@ -62,7 +62,7 @@ public class PlayerBehavior : MonoBehaviour
         var isCat = other.gameObject.GetComponent<CatBehavior>() != null ? true : false;
         if (isCat)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }
