@@ -38,6 +38,8 @@ public class CatRingBehavior : MonoBehaviour
        gameObject.transform.Rotate(rotation,Space.Self);
     }
 
+    public List<GameObject> Cats => _cats;
+
     private CapsuleCollider _parentCylinder;
     private List<GameObject> _cats = new List<GameObject>();
 }

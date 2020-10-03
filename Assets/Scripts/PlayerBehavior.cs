@@ -28,7 +28,7 @@ public class PlayerBehavior : MonoBehaviour
         if (Input.anyKey)
         {
             Vector3 posDelta = Vector3.zero;
-            
+
             if (wDown)
             {
                 posDelta.z = PlayerSpeed * Time.deltaTime;
@@ -53,10 +53,16 @@ public class PlayerBehavior : MonoBehaviour
             lookAtRotation.y = Mathf.Rad2Deg * Mathf.Atan2(posDelta.x, posDelta.z);
             gameObject.transform.SetPositionAndRotation(
                 gameObject.transform.position, Quaternion.Euler(lookAtRotation));
-
-
         }
+    }
 
-        //gameObject.transform.Rotate(0,0.2f,0,Space.Self);
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.LogWarning("trigger");
+        var isCat = other.gameObject.GetComponent<CatBehavior>() != null ? true : false;
+        if (isCat)
+        {
+            Destroy(this);
+        }
     }
 }

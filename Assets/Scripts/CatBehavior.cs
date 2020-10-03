@@ -16,4 +16,9 @@ public class CatBehavior : MonoBehaviour
     {
         
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        
+    }
 }
