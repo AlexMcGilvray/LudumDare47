@@ -4,38 +4,53 @@ using UnityEngine;
 
 public class CatRingBehavior : MonoBehaviour
 {
-
     public float rotationSpeed = 3.0f;
     public GameObject catTemplateObject;
 
     // Start is called before the first frame update
     void Start()
     {
-        _parentCylinder = gameObject.GetComponentInParent<CapsuleCollider>();
-        var radius = _parentCylinder.radius;
-
         // want to make sure we have a circle for our ring and not an ellipses. This is in case I accidentally
         // change the scale of the X/Z axis non-uniformly
-        Debug.Assert(Mathf.Approximately(gameObject.transform.localScale.x,gameObject.transform.localScale.z));
+        Debug.Assert(Mathf.Approximately(gameObject.transform.localScale.x, gameObject.transform.localScale.z));
 
-        Vector3 spawnPosition;
-        spawnPosition.y = .1f;
-        spawnPosition.x = radius * gameObject.transform.localScale.x;
-        spawnPosition.z = 0;
+        _parentCylinder = gameObject.GetComponentInParent<CapsuleCollider>();
 
-        var cat = Instantiate(catTemplateObject,spawnPosition,Quaternion.identity);
+        var radius = _parentCylinder.radius * gameObject.transform.localScale.x;
+        var circumference = radius * Mathf.PI * 2;
+        var catHitboxLength = catTemplateObject.GetComponent<BoxCollider>().size.z;
+        int numCatsToGenerate = (int)(circumference / catHitboxLength);
+        float angleStepSize = (Mathf.PI * 2) / numCatsToGenerate;
 
-        cat.transform.SetParent(this.transform);
+        Debug.Log("circumference " + circumference);
+        Debug.Log("catHitboxLength " + catHitboxLength);
+        Debug.Log("numCatsToGenerate" + numCatsToGenerate);
+        Debug.Log("angleStepSize " + angleStepSize);
 
-        _cats.Add(cat);
+        for (int i = 0; i < numCatsToGenerate; ++i)
+        {
+            float currentAngle = i * angleStepSize;
+            Debug.Assert(currentAngle < Mathf.PI * 2);
+            Vector3 spawnPosition;
+            spawnPosition.z = Mathf.Sin(currentAngle) * radius;
+            spawnPosition.x = Mathf.Cos(currentAngle) * radius;
+            spawnPosition.y = 0;
+            
+            //Quaternion orientation = Quaternion.Euler(0,currentAngle * Mathf.PI * 2,0);
+            //var cat = Instantiate(catTemplateObject, spawnPosition, orientation);
+            var cat = Instantiate(catTemplateObject, spawnPosition, Quaternion.identity);
+            cat.transform.SetParent(this.transform);
+
+            _cats.Add(cat);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-       var rotation = Vector3.zero;
-       rotation.y = rotationSpeed * Time.deltaTime;
-       gameObject.transform.Rotate(rotation,Space.Self);
+        var rotation = Vector3.zero;
+        rotation.y = rotationSpeed * Time.deltaTime;
+        gameObject.transform.Rotate(rotation, Space.Self);
     }
 
     public List<GameObject> Cats => _cats;
