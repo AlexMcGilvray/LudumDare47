@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80efa927047c44948996cbf40bb6a45a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 25
   catTemplateObject: {fileID: 685528117}
 --- !u!33 &497858672
 MeshFilter:
