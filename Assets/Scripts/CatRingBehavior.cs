@@ -28,8 +28,6 @@ public class CatRingBehavior : MonoBehaviour
         cat.transform.SetParent(this.transform);
 
         _cats.Add(cat);
-
-        
     }
 
     // Update is called once per frame
