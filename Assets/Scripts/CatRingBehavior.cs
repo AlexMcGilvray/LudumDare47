@@ -7,7 +7,6 @@ public class CatRingBehavior : MonoBehaviour
     public float rotationSpeed = 3.0f;
     public GameObject catTemplateObject;
     public float catRingBuffer = 0.5f;
-
     public float catReleaseTimerBaseTarget = 5.0f;
 
     // Start is called before the first frame update
@@ -50,6 +49,27 @@ public class CatRingBehavior : MonoBehaviour
         _catReleaseTimer = catReleaseTimerBaseTarget;
     }
 
+    private void UpdateCatRingLayout()
+    {
+        var catHitboxLength = catTemplateObject.GetComponent<BoxCollider>().size.z + catRingBuffer;
+        var numRingCats = _ringCats.Count;
+        var newCircumference = numRingCats * catHitboxLength;
+        var radius = newCircumference / (Mathf.PI * 2);
+        float angleStepSize = (Mathf.PI * 2) / numRingCats;
+          for (int i = 0; i < numRingCats; ++i)
+        {
+            float currentAngle = i * angleStepSize;
+            Debug.Assert(currentAngle < Mathf.PI * 2);
+            Vector3 spawnPosition;
+            spawnPosition.z = Mathf.Sin(currentAngle) * radius;
+            spawnPosition.x = Mathf.Cos(currentAngle) * radius;
+            spawnPosition.y = 0;
+            Quaternion orientation = Quaternion.Euler(0,currentAngle * -Mathf.Rad2Deg,0);
+
+            _ringCats[i].transform.SetPositionAndRotation(spawnPosition,orientation);
+        }
+    }
+
     void Update()
     {
         var rotation = Vector3.zero;
@@ -65,6 +85,7 @@ public class CatRingBehavior : MonoBehaviour
             cat.transform.SetParent(null);
             _ringCats.RemoveAt(randomCatIdx);
             _catReleaseTimer = catReleaseTimerBaseTarget;
+            UpdateCatRingLayout();
         }
     }
 
