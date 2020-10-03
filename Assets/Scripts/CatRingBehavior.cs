@@ -35,10 +35,10 @@ public class CatRingBehavior : MonoBehaviour
             spawnPosition.z = Mathf.Sin(currentAngle) * radius;
             spawnPosition.x = Mathf.Cos(currentAngle) * radius;
             spawnPosition.y = 0;
-            
-            //Quaternion orientation = Quaternion.Euler(0,currentAngle * Mathf.PI * 2,0);
-            //var cat = Instantiate(catTemplateObject, spawnPosition, orientation);
-            var cat = Instantiate(catTemplateObject, spawnPosition, Quaternion.identity);
+          
+            Quaternion orientation = Quaternion.Euler(0,currentAngle * -Mathf.Rad2Deg,0);
+            var cat = Instantiate(catTemplateObject, spawnPosition, orientation);
+            // var cat = Instantiate(catTemplateObject, spawnPosition, Quaternion.identity);
             cat.transform.SetParent(this.transform);
 
             _cats.Add(cat);
