@@ -6,6 +6,9 @@ public class CatRingBehavior : MonoBehaviour
 {
     public float rotationSpeed = 3.0f;
     public GameObject catTemplateObject;
+    public float catRingBuffer = 0.5f;
+
+    public float catReleaseTimerBaseTarget = 5.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +21,7 @@ public class CatRingBehavior : MonoBehaviour
 
         var radius = _parentCylinder.radius * gameObject.transform.localScale.x;
         var circumference = radius * Mathf.PI * 2;
-        var catHitboxLength = catTemplateObject.GetComponent<BoxCollider>().size.z;
+        var catHitboxLength = catTemplateObject.GetComponent<BoxCollider>().size.z + catRingBuffer;
         int numCatsToGenerate = (int)(circumference / catHitboxLength);
         float angleStepSize = (Mathf.PI * 2) / numCatsToGenerate;
 
@@ -41,8 +44,10 @@ public class CatRingBehavior : MonoBehaviour
             // var cat = Instantiate(catTemplateObject, spawnPosition, Quaternion.identity);
             cat.transform.SetParent(this.transform);
 
-            _cats.Add(cat);
+            _ringCats.Add(cat);
         }
+
+        _catReleaseTimer = catReleaseTimerBaseTarget;
     }
 
     void Update()
@@ -50,11 +55,24 @@ public class CatRingBehavior : MonoBehaviour
         var rotation = Vector3.zero;
         rotation.y = rotationSpeed * Time.deltaTime;
         gameObject.transform.Rotate(rotation, Space.Self);
+
+        _catReleaseTimer -= Time.deltaTime;
+
+        if (_catReleaseTimer <= 0)
+        {
+            int randomCatIdx = Random.Range(0,_ringCats.Count - 1);
+            var cat = _ringCats[randomCatIdx];
+            cat.transform.SetParent(null);
+            _ringCats.RemoveAt(randomCatIdx);
+            _catReleaseTimer = catReleaseTimerBaseTarget;
+        }
     }
 
-    public List<GameObject> Cats => _cats;
+    public List<GameObject> Cats => _ringCats;
 
     private CapsuleCollider _parentCylinder;
-    
-    private List<GameObject> _cats = new List<GameObject>();
+
+    private List<GameObject> _ringCats = new List<GameObject>();
+
+    private float _catReleaseTimer;
 }

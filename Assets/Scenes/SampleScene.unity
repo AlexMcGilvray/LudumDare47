@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 25
   catTemplateObject: {fileID: 685528117}
+  catRingBuffer: 0.5
 --- !u!33 &497858672
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -518,7 +519,7 @@ PrefabInstance:
     - target: {fileID: 1497968609475110349, guid: 29bb01f877c70a642b9e8471549e07de,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.59
+      value: -16.43
       objectReference: {fileID: 0}
     - target: {fileID: 1497968609475110349, guid: 29bb01f877c70a642b9e8471549e07de,
         type: 3}
