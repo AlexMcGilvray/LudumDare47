@@ -25,29 +25,38 @@ public class PlayerBehavior : MonoBehaviour
         aDown = Input.GetKey(KeyCode.A);
         dDown = Input.GetKey(KeyCode.D);
 
-        if (wDown)
+        if (Input.anyKey)
         {
-            Vector3 pos = Vector3.zero;
-            pos.z = PlayerSpeed * Time.deltaTime;
-            gameObject.transform.position += pos;
+            Vector3 posDelta = Vector3.zero;
+            
+            if (wDown)
+            {
+                posDelta.z = PlayerSpeed * Time.deltaTime;
+            }
+            if (sDown)
+            {
+                posDelta.z = -PlayerSpeed * Time.deltaTime;
+            }
+            if (aDown)
+            {
+                posDelta.x = -PlayerSpeed * Time.deltaTime;
+            }
+            if (dDown)
+            {
+                posDelta.x = PlayerSpeed * Time.deltaTime;
+            }
+
+            gameObject.transform.position += posDelta;
+
+            posDelta.Normalize();
+            Vector3 lookAtRotation = Vector3.zero;
+            lookAtRotation.y = Mathf.Rad2Deg * Mathf.Atan2(posDelta.x, posDelta.z);
+            gameObject.transform.SetPositionAndRotation(
+                gameObject.transform.position, Quaternion.Euler(lookAtRotation));
+
+
         }
-        if (sDown)
-        {
-            Vector3 pos = Vector3.zero;
-            pos.z = -PlayerSpeed * Time.deltaTime;
-            gameObject.transform.position += pos;
-        }
-        if (aDown)
-        {
-            Vector3 pos = Vector3.zero;
-            pos.x = -PlayerSpeed * Time.deltaTime;
-            gameObject.transform.position += pos;
-        }
-        if (dDown)
-        {
-            Vector3 pos = Vector3.zero;
-            pos.x = PlayerSpeed * Time.deltaTime;
-            gameObject.transform.position += pos;
-        }
+
+        //gameObject.transform.Rotate(0,0.2f,0,Space.Self);
     }
 }
