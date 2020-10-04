@@ -8,8 +8,8 @@ public class GameManagerBehavior : MonoBehaviour
 
     public float pointsPerSecond = 10;
 
-    public bool IsAlive { 
-        
+    public bool IsAlive
+    {
         get
         {
             return _isAlive;
@@ -21,17 +21,13 @@ public class GameManagerBehavior : MonoBehaviour
             {
                 _ui.ShowGameOver();
             }
-        } }
+        }
+    }
 
     void Start()
     {
         _ui = uiGameObject.GetComponent<UIBehavior>();
     }
-
-    // void AddToScore(int points)
-    // {
-    //     _score += points;
-    // }
 
     void UpdateUI()
     {

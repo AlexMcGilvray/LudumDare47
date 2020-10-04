@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class UIBehavior : MonoBehaviour
 {
@@ -9,10 +11,12 @@ public class UIBehavior : MonoBehaviour
 
     public RawImage gameOverImage;
 
-    // Start is called before the first frame update
+    public Button restartButton;
+
     void Start()
     {
         gameOverImage.enabled = false;
+        restartButton.gameObject.SetActive(false);
     }
 
     public void UpdateScore(int score)
@@ -23,9 +27,16 @@ public class UIBehavior : MonoBehaviour
     public void ShowGameOver()
     {
         gameOverImage.enabled = true;
+        restartButton.gameObject.SetActive(true);
+
+        restartButton.onClick.AddListener(OnClick);
     }
 
-    // Update is called once per frame
+    void OnClick()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     void Update()
     {
         
