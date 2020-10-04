@@ -6,15 +6,13 @@ public class CameraBehavior : MonoBehaviour
 {
     public GameObject player;
 
-    public float cameraApproachSpeed = 3.0f;
+    public float cameraApproachSpeed = 1.0f;
 
-    // Start is called before the first frame update
     void Start()
     {
         _camera = gameObject.GetComponent<Camera>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (player != null)
