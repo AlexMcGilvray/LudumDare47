@@ -172,7 +172,7 @@ public class PlayerBehavior : MonoBehaviour
         var isCat = collision.gameObject.GetComponent<CatBehavior>() != null ? true : false;
         if (!isCat)
         {
-            Debug.LogWarning("hit a " + collision.gameObject.name);
+//            Debug.LogWarning("hit a " + collision.gameObject.name);
             collision.gameObject.GetComponent<Rigidbody>()?.AddForce(_dashDirection * DashHitSpeed);
         }
     }
