@@ -46,28 +46,7 @@ public class CatRingBehavior : MonoBehaviour
             _ringCats.Add(cat);
         }
 
-        _catReleaseTimer = catReleaseTimerBaseTarget;
-    }
-
-    private void UpdateCatRingLayout()
-    {
-        var catHitboxLength = catTemplateObject.GetComponent<BoxCollider>().size.z + catRingBuffer;
-        var numRingCats = _ringCats.Count;
-        var newCircumference = numRingCats * catHitboxLength;
-        var radius = newCircumference / (Mathf.PI * 2);
-        float angleStepSize = (Mathf.PI * 2) / numRingCats;
-          for (int i = 0; i < numRingCats; ++i)
-        {
-            float currentAngle = i * angleStepSize;
-            Debug.Assert(currentAngle < Mathf.PI * 2);
-            Vector3 spawnPosition;
-            spawnPosition.z = Mathf.Sin(currentAngle) * radius;
-            spawnPosition.x = Mathf.Cos(currentAngle) * radius;
-            spawnPosition.y = 0;
-            Quaternion orientation = Quaternion.Euler(0,currentAngle * -Mathf.Rad2Deg,0);
-
-            _ringCats[i].transform.SetPositionAndRotation(spawnPosition,orientation);
-        }
+        _catReleaseTimer = GetNewCatReleaseTimerValue();
     }
 
     void Update()
@@ -83,17 +62,42 @@ public class CatRingBehavior : MonoBehaviour
             int randomCatIdx = Random.Range(0,_ringCats.Count - 1);
             var cat = _ringCats[randomCatIdx];
             cat.transform.SetParent(null);
+            _ricochetCats.Add(cat);
             _ringCats.RemoveAt(randomCatIdx);
-            _catReleaseTimer = catReleaseTimerBaseTarget;
-            UpdateCatRingLayout();
+            _catReleaseTimer = GetNewCatReleaseTimerValue();
+            LayoutCatRing();
         }
     }
+
+    private void LayoutCatRing()
+    {
+        var catHitboxLength = catTemplateObject.GetComponent<BoxCollider>().size.z + catRingBuffer;
+        var numRingCats = _ringCats.Count;
+        var newCircumference = numRingCats * catHitboxLength;
+        var radius = newCircumference / (Mathf.PI * 2);
+        float angleStepSize = (Mathf.PI * 2) / numRingCats;
+        for (int i = 0; i < numRingCats; ++i)
+        {
+            float currentAngle = i * angleStepSize;
+            Debug.Assert(currentAngle < Mathf.PI * 2);
+            Vector3 updatedLayoutPosition;
+            updatedLayoutPosition.z = Mathf.Sin(currentAngle) * radius;
+            updatedLayoutPosition.x = Mathf.Cos(currentAngle) * radius;
+            updatedLayoutPosition.y = 0;
+            Quaternion orientation = Quaternion.Euler(0,currentAngle * -Mathf.Rad2Deg,0);
+            _ringCats[i].transform.SetPositionAndRotation(updatedLayoutPosition,orientation);
+        }
+    }
+
+    private float GetNewCatReleaseTimerValue() => catReleaseTimerBaseTarget + (catReleaseTimerBaseTarget / 5.0f);
 
     public List<GameObject> Cats => _ringCats;
 
     private CapsuleCollider _parentCylinder;
 
     private List<GameObject> _ringCats = new List<GameObject>();
+
+    private List<GameObject> _ricochetCats = new List<GameObject>();
 
     private float _catReleaseTimer;
 }
