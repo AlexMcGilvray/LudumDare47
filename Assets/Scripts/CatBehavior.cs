@@ -25,13 +25,11 @@ public class CatBehavior : MonoBehaviour
     {
         _state = state;
     }
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         switch (_state)
@@ -53,14 +51,11 @@ public class CatBehavior : MonoBehaviour
     {
         if (_richochetCollisionResponseDelaySeconds <= 0)
         {
-
-
             if (_state == CatState.Ricochet &&
                 other.gameObject.GetComponent<CatBehavior>() != null)
             {
                 _ricochetDirection = -_ricochetDirection;
                 //Debug.Log("Cat collided with cat in OnTriggerEnter");
-
             }
         }
 
