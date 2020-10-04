@@ -1783,6 +1783,16 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1648394872}
+    - target: {fileID: 6964405530295497567, guid: 09f11d55662863e468691cc8aaff57ce,
+        type: 3}
+      propertyPath: DashTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6964405530295497567, guid: 09f11d55662863e468691cc8aaff57ce,
+        type: 3}
+      propertyPath: DashSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6964405530327262591, guid: 09f11d55662863e468691cc8aaff57ce,
         type: 3}
       propertyPath: m_LocalScale.x

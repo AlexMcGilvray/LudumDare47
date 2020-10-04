@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum PlayerState
+public enum PlayerState
 {
     Moving,
     Dashing
@@ -17,6 +17,8 @@ public class PlayerBehavior : MonoBehaviour
     public float DashTime = 0.5f;
 
     public GameObject gameManager;
+    
+    public PlayerState State => _state;
 
     void Start()
     {
@@ -126,14 +128,10 @@ public class PlayerBehavior : MonoBehaviour
                 }
                 break;
         }
-
-
     }
 
     void OnTriggerEnter(Collider other)
     {
-
-
         var isCat = other.gameObject.GetComponent<CatBehavior>() != null ? true : false;
         if (isCat)
         {
