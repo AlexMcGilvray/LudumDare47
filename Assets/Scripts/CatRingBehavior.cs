@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class CatRingBehavior : MonoBehaviour
 {
-    public float rotationSpeed = 3.0f;
+    public float rotationSpeed = 45.0f;
     public GameObject catTemplateObject;
     public float catRingBuffer = 0.5f;
     public float catReleaseTimerBaseTarget = 5.0f;
+    public float additionalCatRingSpeed = 150.0f; 
+    public float additionalCatRingSpeedDecay = 50.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -51,8 +53,18 @@ public class CatRingBehavior : MonoBehaviour
 
     void Update()
     {
+        if (_currentAdditionalRotationSpeed > 0)
+        {
+            _currentAdditionalRotationSpeed -= additionalCatRingSpeedDecay * Time.deltaTime;
+        }
+        else
+        {
+            _currentAdditionalRotationSpeed = 0;
+        }
+
         var rotation = Vector3.zero;
-        rotation.y = rotationSpeed * Time.deltaTime;
+        rotation.y = (rotationSpeed + _currentAdditionalRotationSpeed) * Time.deltaTime;
+        
         gameObject.transform.Rotate(rotation, Space.Self);
 
         _catReleaseTimer -= Time.deltaTime;
@@ -68,6 +80,7 @@ public class CatRingBehavior : MonoBehaviour
             _ringCats.RemoveAt(randomCatIdx);
             _catReleaseTimer = GetNewCatReleaseTimerValue();
             LayoutCatRing();
+            _currentAdditionalRotationSpeed = additionalCatRingSpeed;
         }
     }
 
@@ -102,4 +115,6 @@ public class CatRingBehavior : MonoBehaviour
     private List<GameObject> _ricochetCats = new List<GameObject>(); // may not need this
 
     private float _catReleaseTimer;
+
+    private float _currentAdditionalRotationSpeed = 0;
 }
