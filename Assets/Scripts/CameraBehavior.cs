@@ -8,13 +8,32 @@ public class CameraBehavior : MonoBehaviour
 
     public float cameraApproachSpeed = 1.0f;
 
+    public float cameraStartYOffset = 500.0f;
+
+    public float cameraZoomInTime = 2.0f;
+
     void Start()
     {
         _camera = gameObject.GetComponent<Camera>();
+
+        _cameraStartY = gameObject.transform.position.y;
+        _cameraZoomCurrent = cameraZoomInTime;
     }
 
     void Update()
     {
+        if (_cameraZoomCurrent > 0.0f)
+        {
+            _cameraZoomCurrent -= Time.deltaTime;
+            float cameraY = Mathf.Lerp(
+                _cameraStartY,
+                _cameraStartY + cameraStartYOffset,
+                _cameraZoomCurrent / cameraZoomInTime);
+            var camPos = gameObject.transform.position;
+            camPos.y = cameraY;
+            gameObject.transform.position = camPos;
+        }
+
         if (player != null)
         {
             Vector2 playerTopDownPos;
@@ -39,4 +58,7 @@ public class CameraBehavior : MonoBehaviour
     }
 
     private Camera _camera;
+
+    private float _cameraStartY;
+    private float _cameraZoomCurrent;
 }
