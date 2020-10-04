@@ -66,43 +66,53 @@ public class CatBehavior : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (_richochetCollisionResponseDelaySeconds <= 0)
+        void onTriggerEnterRingState()
         {
-            if (_state == CatState.Ricochet &&
-                other.gameObject.GetComponent<PlayerBehavior>() == null)
+            
+        }
+
+        void onTriggerEnterRicochetState()
+        {
+            if (_richochetCollisionResponseDelaySeconds <= 0)
             {
-                other.GetComponent<Rigidbody>()?.AddForce(_ricochetDirection * _ricochetSpeed ,ForceMode.Impulse);
-
-                _ricochetDirection = -_ricochetDirection;
-                _ricochetDirection.x += Random.value;
-                _ricochetDirection.z += Random.value;
-                _ricochetSpeed += ricochetSpeedIncreaseOnBounce;
-
-                _bouncesLeft--;
-                if (_bouncesLeft <= 0)
+                if (other.gameObject.GetComponent<PlayerBehavior>() == null)
                 {
-                    _ricochetSpeed = _ricochetSpeed * 2.0f;
-                    SetState(CatState.Leaving);
+                    other.GetComponent<Rigidbody>()?.AddForce(_ricochetDirection * _ricochetSpeed, ForceMode.Impulse);
+
+                    _ricochetDirection = -_ricochetDirection;
+                    _ricochetDirection.x += Random.value;
+                    _ricochetDirection.z += Random.value;
+                    _ricochetSpeed += ricochetSpeedIncreaseOnBounce;
+
+                    _bouncesLeft--;
+                    if (_bouncesLeft <= 0)
+                    {
+                        _ricochetSpeed = _ricochetSpeed * 2.0f;
+                        SetState(CatState.Leaving);
+                    }
+                    //Debug.Log("Cat collided with " + other.gameObject.name + " in OnTriggerEnter");
                 }
-                //Debug.Log("Cat collided with " + other.gameObject.name + " in OnTriggerEnter");
             }
-        }
-        else
-        {
-            if (_state == CatState.Ricochet &&
-                other.gameObject.GetComponent<PlayerBehavior>() == null &&
-                other.gameObject.GetComponent<CatBehavior>() == null)
+            else
             {
-                other.GetComponent<Rigidbody>()?.AddForce(_ricochetDirection * _ricochetSpeed * ringReleaseForceMultiplier, ForceMode.Impulse);
+                if (other.gameObject.GetComponent<PlayerBehavior>() == null &&
+                    other.gameObject.GetComponent<CatBehavior>() == null)
+                {
+                    other.GetComponent<Rigidbody>()?.AddForce(_ricochetDirection * _ricochetSpeed * ringReleaseForceMultiplier, ForceMode.Impulse);
 
-                _ricochetDirection.x += Random.value / 2.0f;
-                _ricochetDirection.z += Random.value / 2.0f;
-
-       
+                    _ricochetDirection.x += Random.value / 2.0f;
+                    _ricochetDirection.z += Random.value / 2.0f;
+                }
             }
         }
 
-        
+        switch (_state)
+        {
+            case CatState.Ricochet:
+                onTriggerEnterRicochetState();
+                break;
+        }
+
     }
 
     // void OnCollisionEnter(Collision collision)
