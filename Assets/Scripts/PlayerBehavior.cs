@@ -11,13 +11,11 @@ public class PlayerBehavior : MonoBehaviour
     bool aDown;
     bool dDown;
 
-    // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         wDown = Input.GetKey(KeyCode.W);
@@ -58,11 +56,22 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        //Debug.LogWarning("trigger");
+
+
         var isCat = other.gameObject.GetComponent<CatBehavior>() != null ? true : false;
         if (isCat)
         {
             Destroy(gameObject);
         }
+        else
+        {
+        }
     }
+
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     Debug.Log("enter " + collision.gameObject.name);
+    //     gameObject.transform.position = _lastPosition;
+     
+    // }
 }

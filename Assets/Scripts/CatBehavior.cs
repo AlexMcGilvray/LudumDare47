@@ -52,25 +52,25 @@ public class CatBehavior : MonoBehaviour
         if (_richochetCollisionResponseDelaySeconds <= 0)
         {
             if (_state == CatState.Ricochet &&
-                other.gameObject.GetComponent<CatBehavior>() != null)
+                other.gameObject.GetComponent<PlayerBehavior>() == null)
             {
                 _ricochetDirection = -_ricochetDirection;
-                //Debug.Log("Cat collided with cat in OnTriggerEnter");
+                //Debug.Log("Cat collided with " + other.gameObject.name + " in OnTriggerEnter");
             }
         }
 
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (_state == CatState.Ricochet &&
-            collision.gameObject.GetComponent<CatBehavior>() != null)
-        {
-            _ricochetDirection = -_ricochetDirection;
-            //Debug.Log("Cat collided with cat in OnCollisionEnter");
-        }
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     if (_state == CatState.Ricochet &&
+    //         collision.gameObject.GetComponent<PlayerBehavior>() == null)
+    //     {
+    //         _ricochetDirection = -_ricochetDirection;
+    //         Debug.Log("Cat collided with " + collision.gameObject.name + " in OnCollisionEnter");
+    //     }
 
-    }
+    // }
 
     private CatState _state = CatState.Ring;
 
