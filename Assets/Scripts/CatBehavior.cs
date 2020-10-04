@@ -21,6 +21,8 @@ public class CatBehavior : MonoBehaviour
 
     public int bounceRandomRange = 3;
 
+    public float ringReleaseForceMultiplier = 20.0f;
+
     public void ChangeToRicochetMode()
     {
         SetState(CatState.Ricochet);
@@ -36,6 +38,7 @@ public class CatBehavior : MonoBehaviour
     void Start()
     {
         _ricochetSpeed = ricochetSpeed;
+        _collider = gameObject.GetComponent<BoxCollider>();
     }
 
     void Update()
@@ -71,8 +74,8 @@ public class CatBehavior : MonoBehaviour
                 other.GetComponent<Rigidbody>()?.AddForce(_ricochetDirection * _ricochetSpeed ,ForceMode.Impulse);
 
                 _ricochetDirection = -_ricochetDirection;
-                _ricochetDirection.x += Random.value / 2.0f;
-                _ricochetDirection.z += Random.value / 2.0f;
+                _ricochetDirection.x += Random.value;
+                _ricochetDirection.z += Random.value;
                 _ricochetSpeed += ricochetSpeedIncreaseOnBounce;
 
                 _bouncesLeft--;
@@ -82,6 +85,20 @@ public class CatBehavior : MonoBehaviour
                     SetState(CatState.Leaving);
                 }
                 //Debug.Log("Cat collided with " + other.gameObject.name + " in OnTriggerEnter");
+            }
+        }
+        else
+        {
+            if (_state == CatState.Ricochet &&
+                other.gameObject.GetComponent<PlayerBehavior>() == null &&
+                other.gameObject.GetComponent<CatBehavior>() == null)
+            {
+                other.GetComponent<Rigidbody>()?.AddForce(_ricochetDirection * _ricochetSpeed * ringReleaseForceMultiplier, ForceMode.Impulse);
+
+                _ricochetDirection.x += Random.value / 2.0f;
+                _ricochetDirection.z += Random.value / 2.0f;
+
+       
             }
         }
 
@@ -109,4 +126,6 @@ public class CatBehavior : MonoBehaviour
     private Vector3 _ricochetDirection;
 
     private float _richochetCollisionResponseDelaySeconds;
+
+    private BoxCollider _collider;
 }
