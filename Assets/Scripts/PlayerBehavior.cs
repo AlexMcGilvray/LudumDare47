@@ -23,7 +23,7 @@ public class PlayerBehavior : MonoBehaviour
         aDown = Input.GetKey(KeyCode.A);
         dDown = Input.GetKey(KeyCode.D);
 
-        if (Input.anyKey)
+        if (Input.anyKey) //keyboard has priority over gamepad
         {
             Vector3 posDelta = Vector3.zero;
 
@@ -52,6 +52,26 @@ public class PlayerBehavior : MonoBehaviour
             gameObject.transform.SetPositionAndRotation(
                 gameObject.transform.position, Quaternion.Euler(lookAtRotation));
         }
+        else
+        {
+
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            if (!Mathf.Approximately(horizontal, 0.0f) || !Mathf.Approximately(vertical, 0.0f))
+            {
+                Vector3 posDelta = Vector3.zero;
+                posDelta.x = horizontal * PlayerSpeed * Time.deltaTime;
+                posDelta.z = vertical * PlayerSpeed * Time.deltaTime;
+
+                gameObject.transform.position += posDelta;
+
+                posDelta.Normalize();
+                Vector3 lookAtRotation = Vector3.zero;
+                lookAtRotation.y = Mathf.Rad2Deg * Mathf.Atan2(posDelta.x, posDelta.z);
+                gameObject.transform.SetPositionAndRotation(
+                    gameObject.transform.position, Quaternion.Euler(lookAtRotation));
+            }
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -72,6 +92,6 @@ public class PlayerBehavior : MonoBehaviour
     // {
     //     Debug.Log("enter " + collision.gameObject.name);
     //     gameObject.transform.position = _lastPosition;
-     
+
     // }
 }
