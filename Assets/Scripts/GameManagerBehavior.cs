@@ -8,18 +8,30 @@ public class GameManagerBehavior : MonoBehaviour
 
     public float pointsPerSecond = 10;
 
-    public bool IsAlive { get; set; } = true;
+    public bool IsAlive { 
+        
+        get
+        {
+            return _isAlive;
+        }
+        set
+        {
+            _isAlive = value;
+            if (!_isAlive)
+            {
+                _ui.ShowGameOver();
+            }
+        } }
 
     void Start()
     {
         _ui = uiGameObject.GetComponent<UIBehavior>();
     }
 
-    void AddToScore(int points)
-    {
-        _score += points;
-        UpdateUI();
-    }
+    // void AddToScore(int points)
+    // {
+    //     _score += points;
+    // }
 
     void UpdateUI()
     {
@@ -39,4 +51,6 @@ public class GameManagerBehavior : MonoBehaviour
         }
 
     }
+
+    private bool _isAlive = true;
 }
