@@ -8,11 +8,6 @@ public class PlayerBehavior : MonoBehaviour
 
     public GameObject gameManager;
 
-    bool wDown;
-    bool sDown;
-    bool aDown;
-    bool dDown;
-
     void Start()
     {
         _gameManager = gameManager.GetComponent<GameManagerBehavior>();
@@ -20,6 +15,10 @@ public class PlayerBehavior : MonoBehaviour
 
     void Update()
     {
+        bool wDown;
+        bool sDown;
+        bool aDown;
+        bool dDown;
         wDown = Input.GetKey(KeyCode.W);
         sDown = Input.GetKey(KeyCode.S);
         aDown = Input.GetKey(KeyCode.A);
