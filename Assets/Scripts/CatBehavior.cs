@@ -68,10 +68,13 @@ public class CatBehavior : MonoBehaviour
             if (_state == CatState.Ricochet &&
                 other.gameObject.GetComponent<PlayerBehavior>() == null)
             {
+                other.GetComponent<Rigidbody>()?.AddForce(_ricochetDirection * _ricochetSpeed ,ForceMode.Impulse);
+
                 _ricochetDirection = -_ricochetDirection;
                 _ricochetDirection.x += Random.value / 2.0f;
                 _ricochetDirection.z += Random.value / 2.0f;
                 _ricochetSpeed += ricochetSpeedIncreaseOnBounce;
+
                 _bouncesLeft--;
                 if (_bouncesLeft <= 0)
                 {
@@ -81,6 +84,8 @@ public class CatBehavior : MonoBehaviour
                 //Debug.Log("Cat collided with " + other.gameObject.name + " in OnTriggerEnter");
             }
         }
+
+        
     }
 
     // void OnCollisionEnter(Collision collision)
