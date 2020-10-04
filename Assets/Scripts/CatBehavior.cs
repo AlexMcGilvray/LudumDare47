@@ -41,6 +41,8 @@ public class CatBehavior : MonoBehaviour
             case CatState.Ricochet:
                 gameObject.transform.position += _ricochetDirection * ricochetSpeed * Time.deltaTime;
                 _richochetCollisionResponseDelaySeconds -= Time.deltaTime;
+                float directionAngle = Mathf.Atan2(-_ricochetDirection.x, -_ricochetDirection.z);
+                gameObject.transform.rotation = Quaternion.Euler(0,directionAngle * Mathf.Rad2Deg,0);
                 break;
             case CatState.Leaving:
                 break;

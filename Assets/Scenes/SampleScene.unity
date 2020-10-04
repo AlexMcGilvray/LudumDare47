@@ -169,6 +169,7 @@ MonoBehaviour:
   rotationSpeed: 25
   catTemplateObject: {fileID: 685528117}
   catRingBuffer: 0.5
+  catReleaseTimerBaseTarget: 3
 --- !u!33 &497858672
 MeshFilter:
   m_ObjectHideFlags: 0
