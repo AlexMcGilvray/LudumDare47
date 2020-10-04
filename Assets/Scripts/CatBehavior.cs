@@ -55,6 +55,8 @@ public class CatBehavior : MonoBehaviour
                 other.gameObject.GetComponent<PlayerBehavior>() == null)
             {
                 _ricochetDirection = -_ricochetDirection;
+                _ricochetDirection.x += Random.value / 2.0f;
+                _ricochetDirection.z += Random.value / 2.0f;
                 //Debug.Log("Cat collided with " + other.gameObject.name + " in OnTriggerEnter");
             }
         }
