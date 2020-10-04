@@ -68,7 +68,14 @@ public class CatBehavior : MonoBehaviour
     {
         void onTriggerEnterRingState()
         {
-            
+            if (other.gameObject.GetComponent<PlayerBehavior>() == null &&
+                    other.gameObject.GetComponent<CatBehavior>() == null)
+            {
+                Vector3 direction = other.gameObject.transform.position - gameObject.transform.position;
+                direction.Normalize();
+                other.GetComponent<Rigidbody>()?.AddForce(
+                    direction * _ricochetSpeed * ringReleaseForceMultiplier, ForceMode.Impulse);
+            }
         }
 
         void onTriggerEnterRicochetState()
@@ -77,7 +84,8 @@ public class CatBehavior : MonoBehaviour
             {
                 if (other.gameObject.GetComponent<PlayerBehavior>() == null)
                 {
-                    other.GetComponent<Rigidbody>()?.AddForce(_ricochetDirection * _ricochetSpeed, ForceMode.Impulse);
+                    other.GetComponent<Rigidbody>()?.AddForce(
+                        _ricochetDirection * _ricochetSpeed, ForceMode.Impulse);
 
                     _ricochetDirection = -_ricochetDirection;
                     _ricochetDirection.x += Random.value;
@@ -98,7 +106,8 @@ public class CatBehavior : MonoBehaviour
                 if (other.gameObject.GetComponent<PlayerBehavior>() == null &&
                     other.gameObject.GetComponent<CatBehavior>() == null)
                 {
-                    other.GetComponent<Rigidbody>()?.AddForce(_ricochetDirection * _ricochetSpeed * ringReleaseForceMultiplier, ForceMode.Impulse);
+                    other.GetComponent<Rigidbody>()?.AddForce(
+                        _ricochetDirection * _ricochetSpeed * ringReleaseForceMultiplier, ForceMode.Impulse);
 
                     _ricochetDirection.x += Random.value / 2.0f;
                     _ricochetDirection.z += Random.value / 2.0f;
@@ -110,6 +119,9 @@ public class CatBehavior : MonoBehaviour
         {
             case CatState.Ricochet:
                 onTriggerEnterRicochetState();
+                break;
+            case CatState.Ring:
+                onTriggerEnterRingState();
                 break;
         }
 
