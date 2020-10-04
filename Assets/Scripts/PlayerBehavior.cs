@@ -16,6 +16,8 @@ public class PlayerBehavior : MonoBehaviour
 
     public float DashTime = 0.5f;
 
+    public float DashCooldownTime = 1.5f;
+
     public GameObject gameManager;
     
     public PlayerState State => _state;
@@ -99,7 +101,11 @@ public class PlayerBehavior : MonoBehaviour
         switch (_state)
         {
             case PlayerState.Moving:
-                if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space))
+                if (_dashCooldownTimer > 0)
+                {
+                    _dashCooldownTimer -= Time.deltaTime;
+                }                
+                if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space)) && _dashCooldownTimer <= 0)
                 {
                     Vector3 lookAtRotation = Vector3.zero;
                     lookAtRotation.x = Mathf.Sin(Mathf.Deg2Rad * gameObject.transform.rotation.eulerAngles.y);
@@ -107,6 +113,7 @@ public class PlayerBehavior : MonoBehaviour
                     _dashDirection = lookAtRotation;
                     _dashDirection.Normalize();
                     _dashTimer = DashTime;
+                    _dashCooldownTimer = DashCooldownTime;
                     SetState(PlayerState.Dashing);
                 }
                 else
@@ -145,6 +152,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private Vector3 _dashDirection;
     private float _dashTimer;
+    private float _dashCooldownTimer;
 
     private GameManagerBehavior _gameManager;
 
