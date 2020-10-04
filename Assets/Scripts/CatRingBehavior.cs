@@ -24,10 +24,10 @@ public class CatRingBehavior : MonoBehaviour
         int numCatsToGenerate = (int)(circumference / catHitboxLength);
         float angleStepSize = (Mathf.PI * 2) / numCatsToGenerate;
 
-        Debug.Log("circumference " + circumference);
-        Debug.Log("catHitboxLength " + catHitboxLength);
-        Debug.Log("numCatsToGenerate" + numCatsToGenerate);
-        Debug.Log("angleStepSize " + angleStepSize);
+        // Debug.Log("circumference " + circumference);
+        // Debug.Log("catHitboxLength " + catHitboxLength);
+        // Debug.Log("numCatsToGenerate" + numCatsToGenerate);
+        // Debug.Log("angleStepSize " + angleStepSize);
 
         for (int i = 0; i < numCatsToGenerate; ++i)
         {
@@ -62,6 +62,8 @@ public class CatRingBehavior : MonoBehaviour
             int randomCatIdx = Random.Range(0,_ringCats.Count - 1);
             var cat = _ringCats[randomCatIdx];
             cat.transform.SetParent(null);
+            Vector3 catDirection = Vector3.zero;
+            cat.GetComponent<CatBehavior>().ChangeToRicochetMode();
             _ricochetCats.Add(cat);
             _ringCats.RemoveAt(randomCatIdx);
             _catReleaseTimer = GetNewCatReleaseTimerValue();
@@ -97,7 +99,7 @@ public class CatRingBehavior : MonoBehaviour
 
     private List<GameObject> _ringCats = new List<GameObject>();
 
-    private List<GameObject> _ricochetCats = new List<GameObject>();
+    private List<GameObject> _ricochetCats = new List<GameObject>(); // may not need this
 
     private float _catReleaseTimer;
 }

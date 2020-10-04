@@ -58,7 +58,7 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.LogWarning("trigger");
+        //Debug.LogWarning("trigger");
         var isCat = other.gameObject.GetComponent<CatBehavior>() != null ? true : false;
         if (isCat)
         {

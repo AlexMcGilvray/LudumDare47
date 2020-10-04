@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9bcb49ed34a284b872114d132d73a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ricochetSpeed: 3
 --- !u!65 &7159957871540754536
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -54,7 +55,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1497968609475110350}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.66, y: 1.33, z: 2.36}
