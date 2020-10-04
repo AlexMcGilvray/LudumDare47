@@ -8,13 +8,11 @@ public class GameManagerBehavior : MonoBehaviour
 
     public float pointsPerSecond = 10;
 
-    //public GameObject catRing;
+    public bool IsAlive { get; set; } = true;
 
-    // Start is called before the first frame update
     void Start()
     {
         _ui = uiGameObject.GetComponent<UIBehavior>();
-       // _catRing = catRing.GetComponent<CatRingBehavior>();
     }
 
     void AddToScore(int points)
@@ -32,20 +30,13 @@ public class GameManagerBehavior : MonoBehaviour
 
     private UIBehavior _ui;
 
-    // Update is called once per frame
     void Update()
-    {     
-        _score += pointsPerSecond * Time.deltaTime;
-        UpdateUI();
-        //player.GetComponentInChildren<MeshCollider>().o
-        //Physics.OverlapBox()
-        
-        //Physics.
-    //     foreach(var cat in _catRing.Cats)
-    //     {
-            
-    //     }
-     }
+    {
+        if (IsAlive)
+        {
+            _score += pointsPerSecond * Time.deltaTime;
+            UpdateUI();
+        }
 
-    //private CatRingBehavior _catRing;
+    }
 }

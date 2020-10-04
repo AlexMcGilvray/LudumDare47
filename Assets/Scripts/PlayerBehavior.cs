@@ -6,6 +6,8 @@ public class PlayerBehavior : MonoBehaviour
 {
     public float PlayerSpeed = 10.0f;
 
+    public GameObject gameManager;
+
     bool wDown;
     bool sDown;
     bool aDown;
@@ -13,7 +15,7 @@ public class PlayerBehavior : MonoBehaviour
 
     void Start()
     {
-
+        _gameManager = gameManager.GetComponent<GameManagerBehavior>();
     }
 
     void Update()
@@ -81,12 +83,15 @@ public class PlayerBehavior : MonoBehaviour
         var isCat = other.gameObject.GetComponent<CatBehavior>() != null ? true : false;
         if (isCat)
         {
+            _gameManager.IsAlive = false;
             Destroy(gameObject);
         }
         else
         {
         }
     }
+
+    private GameManagerBehavior _gameManager;
 
     // void OnCollisionEnter(Collision collision)
     // {
