@@ -73,6 +73,7 @@ public class CatBehavior : MonoBehaviour
             {
                 Vector3 direction = other.gameObject.transform.position - gameObject.transform.position;
                 direction.Normalize();
+                direction.y = 0;
                 other.GetComponent<Rigidbody>()?.AddForce(
                     direction * _ricochetSpeed * ringReleaseForceMultiplier, ForceMode.Impulse);
             }

@@ -38,7 +38,7 @@ public class CatRingBehavior : MonoBehaviour
             Vector3 spawnPosition;
             spawnPosition.z = Mathf.Sin(currentAngle) * radius;
             spawnPosition.x = Mathf.Cos(currentAngle) * radius;
-            spawnPosition.y = 0;
+            spawnPosition.y = catTemplateObject.transform.position.y;
           
             Quaternion orientation = Quaternion.Euler(0,currentAngle * -Mathf.Rad2Deg,0);
             var cat = Instantiate(catTemplateObject, spawnPosition, orientation);
@@ -98,7 +98,7 @@ public class CatRingBehavior : MonoBehaviour
             Vector3 updatedLayoutPosition;
             updatedLayoutPosition.z = Mathf.Sin(currentAngle) * radius;
             updatedLayoutPosition.x = Mathf.Cos(currentAngle) * radius;
-            updatedLayoutPosition.y = 0;
+            updatedLayoutPosition.y = catTemplateObject.transform.position.y;
             Quaternion orientation = Quaternion.Euler(0,currentAngle * -Mathf.Rad2Deg,0);
             _ringCats[i].transform.SetPositionAndRotation(updatedLayoutPosition,orientation);
         }
