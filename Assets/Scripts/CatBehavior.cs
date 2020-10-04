@@ -59,7 +59,7 @@ public class CatBehavior : MonoBehaviour
                 other.gameObject.GetComponent<CatBehavior>() != null)
             {
                 _ricochetDirection = -_ricochetDirection;
-                Debug.Log("Cat collided with cat in OnTriggerEnter");
+                //Debug.Log("Cat collided with cat in OnTriggerEnter");
 
             }
         }
@@ -72,7 +72,7 @@ public class CatBehavior : MonoBehaviour
             collision.gameObject.GetComponent<CatBehavior>() != null)
         {
             _ricochetDirection = -_ricochetDirection;
-            Debug.Log("Cat collided with cat in OnCollisionEnter");
+            //Debug.Log("Cat collided with cat in OnCollisionEnter");
         }
 
     }
