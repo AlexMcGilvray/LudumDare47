@@ -15,10 +15,13 @@ public class CameraBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var pos = gameObject.transform.position;
-        pos.x = player.transform.position.x;
-        pos.z = player.transform.position.z;
-        gameObject.transform.position = pos;
+        if (player != null)
+        {
+            var pos = gameObject.transform.position;
+            pos.x = player.transform.position.x;
+            pos.z = player.transform.position.z;
+            gameObject.transform.position = pos;
+        }
     }
 
     private Camera _camera;
