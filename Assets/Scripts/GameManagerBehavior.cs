@@ -24,6 +24,11 @@ public class GameManagerBehavior : MonoBehaviour
         }
     }
 
+    public void AddScore(int points)
+    {
+        _score += points;
+    }
+
     void Start()
     {
         _ui = uiGameObject.GetComponent<UIBehavior>();

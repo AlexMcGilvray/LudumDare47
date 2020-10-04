@@ -19,7 +19,7 @@ public class PlayerBehavior : MonoBehaviour
     public float DashCooldownTime = 1.5f;
 
     public GameObject gameManager;
-    
+
     public PlayerState State => _state;
 
     void Start()
@@ -104,7 +104,7 @@ public class PlayerBehavior : MonoBehaviour
                 if (_dashCooldownTimer > 0)
                 {
                     _dashCooldownTimer -= Time.deltaTime;
-                }                
+                }
                 if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space)) && _dashCooldownTimer <= 0)
                 {
                     Vector3 lookAtRotation = Vector3.zero;
@@ -140,16 +140,44 @@ public class PlayerBehavior : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         var isCat = other.gameObject.GetComponent<CatBehavior>() != null ? true : false;
-        if (isCat)
+
+        switch (_state)
         {
-            _gameManager.IsAlive = false;
-            Destroy(gameObject);
+            case PlayerState.Moving:
+                if (isCat)
+                {
+                    _gameManager.IsAlive = false;
+                    Destroy(gameObject);
+                }
+                break;
+
+            case PlayerState.Dashing:
+                if (isCat)
+                {
+                    // TODO make a score table or something..
+                    _gameManager.AddScore(50);
+                    other.gameObject.GetComponent<CatBehavior>().OnHitByPlayer();
+                }
+                else
+                {
+                    other.GetComponent<Rigidbody>()?.AddForce(_dashDirection * DashHitSpeed, ForceMode.Impulse);
+                }
+                break;
         }
-        else
+
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        var isCat = collision.gameObject.GetComponent<CatBehavior>() != null ? true : false;
+        if (!isCat)
         {
+            Debug.LogWarning("hit a " + collision.gameObject.name);
+            collision.gameObject.GetComponent<Rigidbody>()?.AddForce(_dashDirection * DashHitSpeed);
         }
     }
 
+    public float DashHitSpeed = 25.0f;
     private Vector3 _dashDirection;
     private float _dashTimer;
     private float _dashCooldownTimer;

@@ -64,6 +64,16 @@ public class CatBehavior : MonoBehaviour
         }
     }
 
+    public void OnHitByPlayer()
+    {
+        _ricochetDirection = -_ricochetDirection;
+        _ricochetDirection.x += Random.value;
+        _ricochetDirection.z += Random.value;
+        GetComponent<Rigidbody>()?.AddForce(
+            _ricochetDirection * _ricochetSpeed * ringReleaseForceMultiplier * 20, ForceMode.Impulse);
+        SetState(CatState.Leaving);
+    }
+
     void OnTriggerEnter(Collider other)
     {
         void onTriggerEnterRingState()
