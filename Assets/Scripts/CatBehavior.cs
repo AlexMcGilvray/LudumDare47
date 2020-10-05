@@ -72,6 +72,7 @@ public class CatBehavior : MonoBehaviour
         _ricochetDirection = -_ricochetDirection;
         _ricochetDirection.x += Random.value;
         _ricochetDirection.z += Random.value;
+        _ricochetSpeed = _ricochetSpeed * 10;
         GetComponent<Rigidbody>()?.AddForce(
             _ricochetDirection * _ricochetSpeed * ringReleaseForceMultiplier * 20, ForceMode.Impulse);
         SetState(CatState.Leaving);
