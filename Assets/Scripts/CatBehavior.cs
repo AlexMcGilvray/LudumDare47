@@ -11,6 +11,8 @@ public enum CatState
 
 public class CatBehavior : MonoBehaviour
 {
+    public List<Material> catMaterials = new List<Material>();
+
     public float ricochetSpeed = 3.0f;
 
     public float ricochetSpeedIncreaseOnBounce = 1.0f;
@@ -39,6 +41,7 @@ public class CatBehavior : MonoBehaviour
     {
         _ricochetSpeed = ricochetSpeed;
         _collider = gameObject.GetComponent<BoxCollider>();
+        gameObject.GetComponentInChildren<MeshRenderer>().sharedMaterial = catMaterials[Random.Range(0,catMaterials.Count)];
     }
 
     void Update()
