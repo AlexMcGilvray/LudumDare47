@@ -6,6 +6,10 @@ public class GameManagerBehavior : MonoBehaviour
 {
     public GameObject uiGameObject;
 
+    public AudioClip gameMusic;
+
+    //public AudioClip gameOverMusic;
+
     public float pointsPerSecond = 10;
 
     public bool IsAlive
@@ -32,6 +36,10 @@ public class GameManagerBehavior : MonoBehaviour
     void Start()
     {
         _ui = uiGameObject.GetComponent<UIBehavior>();
+        _audioSource = gameObject.AddComponent<AudioSource>();
+        _audioSource.clip = gameMusic;
+        _audioSource.volume = 0.7f;
+        _audioSource.Play();
     }
 
     void UpdateUI()
@@ -54,4 +62,7 @@ public class GameManagerBehavior : MonoBehaviour
     }
 
     private bool _isAlive = true;
+
+    private AudioSource _audioSource;
+
 }

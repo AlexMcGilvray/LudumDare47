@@ -83,7 +83,6 @@ public class PlayerBehavior : MonoBehaviour
         }
         else
         {
-
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
             if (!Mathf.Approximately(horizontal, 0.0f) || !Mathf.Approximately(vertical, 0.0f))
