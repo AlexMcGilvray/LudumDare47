@@ -46,11 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9bcb49ed34a284b872114d132d73a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  catMaterials: []
   ricochetSpeed: 3
   ricochetSpeedIncreaseOnBounce: 1
   richochetCollisionResponseDelaySeconds: 2
   bouncesBeforeLeaving: 5
   bounceRandomRange: 3
+  oofSound: {fileID: 8300000, guid: 10af71147de7e4c4e988456feb22ad58, type: 3}
   ringReleaseForceMultiplier: 20
 --- !u!65 &7159957871540754536
 BoxCollider:

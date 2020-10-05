@@ -23,6 +23,9 @@ public class CatBehavior : MonoBehaviour
 
     public int bounceRandomRange = 3;
 
+    public AudioClip oofSound;
+
+
     public float ringReleaseForceMultiplier = 20.0f;
 
     public void ChangeToRicochetMode()
@@ -42,6 +45,7 @@ public class CatBehavior : MonoBehaviour
         _ricochetSpeed = ricochetSpeed;
         _collider = gameObject.GetComponent<BoxCollider>();
         gameObject.GetComponentInChildren<MeshRenderer>().sharedMaterial = catMaterials[Random.Range(0,catMaterials.Count)];
+        _audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     void Update()
@@ -90,6 +94,7 @@ public class CatBehavior : MonoBehaviour
                 direction.y = 0;
                 other.GetComponent<Rigidbody>()?.AddForce(
                     direction * _ricochetSpeed * ringReleaseForceMultiplier, ForceMode.Impulse);
+                _audioSource.PlayOneShot(oofSound);
             }
         }
 
@@ -106,7 +111,7 @@ public class CatBehavior : MonoBehaviour
                     _ricochetDirection.x += Random.value;
                     _ricochetDirection.z += Random.value;
                     _ricochetSpeed += ricochetSpeedIncreaseOnBounce;
-
+                    _audioSource.PlayOneShot(oofSound);
                     _bouncesLeft--;
                     if (_bouncesLeft <= 0)
                     {
@@ -126,6 +131,8 @@ public class CatBehavior : MonoBehaviour
 
                     _ricochetDirection.x += Random.value / 2.0f;
                     _ricochetDirection.z += Random.value / 2.0f;
+                    _audioSource.PlayOneShot(oofSound);
+
                 }
             }
         }
@@ -154,6 +161,7 @@ public class CatBehavior : MonoBehaviour
     // }
 
     // when this hits zero the cat begins to leave the area
+    private AudioSource _audioSource;
 
     private float _ricochetSpeed;
     private int _bouncesLeft;
