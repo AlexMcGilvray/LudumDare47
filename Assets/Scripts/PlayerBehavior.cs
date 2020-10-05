@@ -170,9 +170,8 @@ public class PlayerBehavior : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         var isCat = collision.gameObject.GetComponent<CatBehavior>() != null ? true : false;
-        if (!isCat)
+        if (!isCat && _state == PlayerState.Dashing)
         {
-//            Debug.LogWarning("hit a " + collision.gameObject.name);
             collision.gameObject.GetComponent<Rigidbody>()?.AddForce(_dashDirection * DashHitSpeed);
         }
     }
