@@ -144,6 +144,12 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    private void Kill()
+    {
+        _gameManager.IsAlive = false;
+        Destroy(gameObject);
+    }
+
     void OnTriggerEnter(Collider other)
     {
         var isCat = other.gameObject.GetComponent<CatBehavior>() != null ? true : false;
@@ -153,17 +159,25 @@ public class PlayerBehavior : MonoBehaviour
             case PlayerState.Moving:
                 if (isCat)
                 {
-                    _gameManager.IsAlive = false;
-                    Destroy(gameObject);
+                    Kill();
                 }
                 break;
 
             case PlayerState.Dashing:
                 if (isCat)
                 {
-                    // TODO make a score table or something..
-                    _gameManager.AddScore(50);
-                    other.gameObject.GetComponent<CatBehavior>().OnHitByPlayer();
+                    var cat = other.gameObject.GetComponent<CatBehavior>();
+                    if (cat.State == CatState.Ricochet)
+                    {
+                        // TODO make a score table or something..
+                        _gameManager.AddScore(50);
+                        other.gameObject.GetComponent<CatBehavior>().OnHitByPlayer();
+                    }
+                    else if (cat.State == CatState.Ring)
+                    {
+                        Kill();
+                    }
+
                 }
                 else
                 {

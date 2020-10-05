@@ -29,6 +29,8 @@ public class CatBehavior : MonoBehaviour
 
     public float ringReleaseForceMultiplier = 20.0f;
 
+    public CatState State => _state;
+
     public void ChangeToRicochetMode()
     {
         SetState(CatState.Ricochet);
