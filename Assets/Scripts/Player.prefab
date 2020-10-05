@@ -46,6 +46,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerSpeed: 10
+  DashSpeed: 50
+  DashTime: 0.5
+  DashCooldownTime: 1.5
+  gameManager: {fileID: 0}
+  DashSound: {fileID: 8300000, guid: 136a8d083155c80498aa5c1371a7703b, type: 3}
+  DashHitSpeed: 25
 --- !u!65 &6964405530295497566
 BoxCollider:
   m_ObjectHideFlags: 0

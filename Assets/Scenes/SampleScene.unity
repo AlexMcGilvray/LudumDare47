@@ -1818,6 +1818,11 @@ PrefabInstance:
       propertyPath: DashHitSpeed
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 6964405530295497567, guid: 09f11d55662863e468691cc8aaff57ce,
+        type: 3}
+      propertyPath: DashSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 136a8d083155c80498aa5c1371a7703b, type: 3}
     - target: {fileID: 6964405530327262591, guid: 09f11d55662863e468691cc8aaff57ce,
         type: 3}
       propertyPath: m_LocalScale.x

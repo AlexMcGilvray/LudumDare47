@@ -22,9 +22,14 @@ public class PlayerBehavior : MonoBehaviour
 
     public PlayerState State => _state;
 
+    public AudioClip DashSound;
+
+    private AudioSource _audioSource;
+
     void Start()
     {
         _gameManager = gameManager.GetComponent<GameManagerBehavior>();
+        _audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     void SetState(PlayerState state)
@@ -114,6 +119,10 @@ public class PlayerBehavior : MonoBehaviour
                     _dashDirection.Normalize();
                     _dashTimer = DashTime;
                     _dashCooldownTimer = DashCooldownTime;
+                    if (DashSound != null)
+                    {
+                        _audioSource.PlayOneShot(DashSound);
+                    }
                     SetState(PlayerState.Dashing);
                 }
                 else
