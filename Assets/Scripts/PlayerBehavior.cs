@@ -23,6 +23,7 @@ public class PlayerBehavior : MonoBehaviour
     public PlayerState State => _state;
 
     public AudioClip DashSound;
+    public AudioClip OofSound;
 
     private AudioSource _audioSource;
 
@@ -119,10 +120,7 @@ public class PlayerBehavior : MonoBehaviour
                     _dashDirection.Normalize();
                     _dashTimer = DashTime;
                     _dashCooldownTimer = DashCooldownTime;
-                    if (DashSound != null)
-                    {
-                        _audioSource.PlayOneShot(DashSound);
-                    }
+                    _audioSource.PlayOneShot(DashSound);
                     SetState(PlayerState.Dashing);
                 }
                 else
@@ -181,6 +179,7 @@ public class PlayerBehavior : MonoBehaviour
         var isCat = collision.gameObject.GetComponent<CatBehavior>() != null ? true : false;
         if (!isCat && _state == PlayerState.Dashing)
         {
+            _audioSource.PlayOneShot(OofSound);
             collision.gameObject.GetComponent<Rigidbody>()?.AddForce(_dashDirection * DashHitSpeed);
         }
     }
