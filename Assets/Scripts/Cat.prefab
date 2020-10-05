@@ -53,6 +53,7 @@ MonoBehaviour:
   bouncesBeforeLeaving: 5
   bounceRandomRange: 3
   oofSound: {fileID: 8300000, guid: 10af71147de7e4c4e988456feb22ad58, type: 3}
+  bwahSound: {fileID: 8300000, guid: 016b1de8c8fd20243870d88e207e1a6d, type: 3}
   ringReleaseForceMultiplier: 20
 --- !u!65 &7159957871540754536
 BoxCollider:

@@ -24,6 +24,7 @@ public class CatBehavior : MonoBehaviour
     public int bounceRandomRange = 3;
 
     public AudioClip oofSound;
+    public AudioClip bwahSound;
 
 
     public float ringReleaseForceMultiplier = 20.0f;
@@ -80,6 +81,7 @@ public class CatBehavior : MonoBehaviour
         GetComponent<Rigidbody>()?.AddForce(
             _ricochetDirection * _ricochetSpeed * ringReleaseForceMultiplier * 20, ForceMode.Impulse);
         SetState(CatState.Leaving);
+        _audioSource.PlayOneShot(bwahSound);
     }
 
     void OnTriggerEnter(Collider other)
