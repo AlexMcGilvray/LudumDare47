@@ -39,6 +39,7 @@ public class GameManagerBehavior : MonoBehaviour
         _audioSource = gameObject.AddComponent<AudioSource>();
         _audioSource.clip = gameMusic;
         _audioSource.volume = 0.7f;
+        _audioSource.loop = true;
         _audioSource.Play();
     }
 

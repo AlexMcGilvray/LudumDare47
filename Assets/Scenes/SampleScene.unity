@@ -1055,6 +1055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiGameObject: {fileID: 1667244006}
+  gameMusic: {fileID: 8300000, guid: 729b65bc09ea0d84daa8aed300ac3598, type: 3}
   pointsPerSecond: 5
 --- !u!1 &1667244006 stripped
 GameObject:
