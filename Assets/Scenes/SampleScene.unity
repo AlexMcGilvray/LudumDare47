@@ -645,7 +645,7 @@ MonoBehaviour:
   player: {fileID: 274894950}
   cameraApproachSpeed: 3
   cameraStartYOffset: 500
-  cameraZoomInTime: 1
+  cameraZoomInTime: 2
 --- !u!1001 &1210124742
 PrefabInstance:
   m_ObjectHideFlags: 0
