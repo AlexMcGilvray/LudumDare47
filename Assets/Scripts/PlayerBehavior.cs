@@ -41,25 +41,25 @@ public class PlayerBehavior : MonoBehaviour
     void UpdateMovement()
     {
 
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-            if (!Mathf.Approximately(horizontal, 0.0f) || !Mathf.Approximately(vertical, 0.0f))
-            {
-                Vector3 posDelta = Vector3.zero;
-                posDelta.x = horizontal * PlayerSpeed * Time.deltaTime;
-                posDelta.z = vertical * PlayerSpeed * Time.deltaTime;
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        if (!Mathf.Approximately(horizontal, 0.0f) || !Mathf.Approximately(vertical, 0.0f))
+        {
+            Vector3 posDelta = Vector3.zero;
+            posDelta.x = horizontal * PlayerSpeed * Time.deltaTime;
+            posDelta.z = vertical * PlayerSpeed * Time.deltaTime;
 
-                gameObject.transform.position += posDelta;
+            gameObject.transform.position += posDelta;
 
-                posDelta.Normalize();
-                Vector3 lookAtRotation = Vector3.zero;
-                lookAtRotation.y = Mathf.Rad2Deg * Mathf.Atan2(posDelta.x, posDelta.z);
-                gameObject.transform.SetPositionAndRotation(
-                    gameObject.transform.position, Quaternion.Euler(lookAtRotation));
-            }
-            else
-            {
-                  bool wDown;
+            posDelta.Normalize();
+            Vector3 lookAtRotation = Vector3.zero;
+            lookAtRotation.y = Mathf.Rad2Deg * Mathf.Atan2(posDelta.x, posDelta.z);
+            gameObject.transform.SetPositionAndRotation(
+                gameObject.transform.position, Quaternion.Euler(lookAtRotation));
+        }
+        else
+        {
+            bool wDown;
             bool sDown;
             bool aDown;
             bool dDown;
@@ -95,11 +95,22 @@ public class PlayerBehavior : MonoBehaviour
             lookAtRotation.y = Mathf.Rad2Deg * Mathf.Atan2(posDelta.x, posDelta.z);
             gameObject.transform.SetPositionAndRotation(
                 gameObject.transform.position, Quaternion.Euler(lookAtRotation));
-            }
- 
+        }
+
     }
+
+
+
     void Update()
     {
+        bool AnyGamepadButtonDown()
+        {
+            return Input.GetButtonDown("Jump") ||
+            Input.GetButtonDown("Fire1") ||
+            Input.GetButtonDown("Fire2") || 
+            Input.GetButtonDown("Fire3");
+
+        }
         switch (_state)
         {
             case PlayerState.Moving:
@@ -107,7 +118,7 @@ public class PlayerBehavior : MonoBehaviour
                 {
                     _dashCooldownTimer -= Time.deltaTime;
                 }
-                if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space)) && _dashCooldownTimer <= 0)
+                if ((AnyGamepadButtonDown() || Input.GetKeyDown(KeyCode.Space)) && _dashCooldownTimer <= 0)
                 {
                     Vector3 lookAtRotation = Vector3.zero;
                     lookAtRotation.x = Mathf.Sin(Mathf.Deg2Rad * gameObject.transform.rotation.eulerAngles.y);
