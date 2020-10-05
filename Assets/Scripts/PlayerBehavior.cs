@@ -41,10 +41,25 @@ public class PlayerBehavior : MonoBehaviour
     void UpdateMovement()
     {
 
-        // movement
-        if (Input.anyKey) //keyboard has priority over gamepad
-        {
-            bool wDown;
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            if (!Mathf.Approximately(horizontal, 0.0f) || !Mathf.Approximately(vertical, 0.0f))
+            {
+                Vector3 posDelta = Vector3.zero;
+                posDelta.x = horizontal * PlayerSpeed * Time.deltaTime;
+                posDelta.z = vertical * PlayerSpeed * Time.deltaTime;
+
+                gameObject.transform.position += posDelta;
+
+                posDelta.Normalize();
+                Vector3 lookAtRotation = Vector3.zero;
+                lookAtRotation.y = Mathf.Rad2Deg * Mathf.Atan2(posDelta.x, posDelta.z);
+                gameObject.transform.SetPositionAndRotation(
+                    gameObject.transform.position, Quaternion.Euler(lookAtRotation));
+            }
+            else
+            {
+                  bool wDown;
             bool sDown;
             bool aDown;
             bool dDown;
@@ -80,26 +95,8 @@ public class PlayerBehavior : MonoBehaviour
             lookAtRotation.y = Mathf.Rad2Deg * Mathf.Atan2(posDelta.x, posDelta.z);
             gameObject.transform.SetPositionAndRotation(
                 gameObject.transform.position, Quaternion.Euler(lookAtRotation));
-        }
-        else
-        {
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-            if (!Mathf.Approximately(horizontal, 0.0f) || !Mathf.Approximately(vertical, 0.0f))
-            {
-                Vector3 posDelta = Vector3.zero;
-                posDelta.x = horizontal * PlayerSpeed * Time.deltaTime;
-                posDelta.z = vertical * PlayerSpeed * Time.deltaTime;
-
-                gameObject.transform.position += posDelta;
-
-                posDelta.Normalize();
-                Vector3 lookAtRotation = Vector3.zero;
-                lookAtRotation.y = Mathf.Rad2Deg * Mathf.Atan2(posDelta.x, posDelta.z);
-                gameObject.transform.SetPositionAndRotation(
-                    gameObject.transform.position, Quaternion.Euler(lookAtRotation));
             }
-        }
+ 
     }
     void Update()
     {

@@ -8,7 +8,7 @@ public class GameManagerBehavior : MonoBehaviour
 
     public AudioClip gameMusic;
 
-    //public AudioClip gameOverMusic;
+    public AudioClip gameOverMusic;
 
     public float pointsPerSecond = 10;
 
@@ -23,6 +23,10 @@ public class GameManagerBehavior : MonoBehaviour
             _isAlive = value;
             if (!_isAlive)
             {
+                _audioSource.Stop();
+                _audioSource.clip = gameOverMusic;
+                _audioSource.loop = true;
+                _audioSource.Play();
                 _ui.ShowGameOver();
             }
         }
